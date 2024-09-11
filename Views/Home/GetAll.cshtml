@@ -1,0 +1,123 @@
+﻿@model IEnumerable<EmployeeApp.Models.EmployeesData>
+
+@{
+    ViewData["Title"] = "Employee List";
+}
+
+<style>
+    .employee-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 16px;
+        text-align: left;
+    }
+
+        .employee-table th, .employee-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .employee-table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .employee-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .employee-table img {
+            border-radius: 5px;
+        }
+
+        .employee-table .actions a {
+            margin: 0 5px;
+        }
+
+    .btn-custom {
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+    }
+
+    .btn-primary-custom {
+        background-color: #007bff;
+    }
+
+    .btn-warning-custom {
+        background-color: #ffc107;
+    }
+
+    .btn-info-custom {
+        background-color: #17a2b8;
+    }
+
+    .btn-danger-custom {
+        background-color: #dc3545;
+    }
+
+    .btn-primary-custom:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-warning-custom:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-info-custom:hover {
+        background-color: #138496;
+    }
+
+    .btn-danger-custom:hover {
+        background-color: #c82333;
+    }
+</style>
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="employee-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+            <th>Profile Picture</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.Id</td>
+                <td>@employee.Name</td>
+                <td>@employee.Email</td>
+                <td>@employee.Gender</td>
+                <td>@employee.DOB?.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(employee.PhotoPath))
+                    {
+                        <img src="@employee.PhotoPath" alt="Profile Picture" style="width: 100px; height: 100px;" />
+                    }
+                    else
+                    {
+                        <span>No photo</span>
+                    }
+                </td>
+                <td class="actions">
+                    <a asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-warning-custom btn-custom">Edit</a>
+                    <a asp-action="DetailsView" asp-route-id="@employee.Id" class="btn btn-info-custom btn-custom">Details</a>
+                    <a asp-action="Patch" asp-route-id="@employee.Id" class="btn btn-info-custom btn-custom">Patch</a>
+                    <a asp-action="DeleteConfirmation" asp-route-id="@employee.Id" class="btn btn-danger-custom btn-custom">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary-custom btn-custom">Create New Employee</a>

@@ -1,0 +1,87 @@
+﻿@model EmployeeApp.Models.EmployeesData
+
+@{
+    ViewData["Title"] = "Profile Details";
+}
+
+<style>
+    .id-card {
+        border: 2px solid #007bff;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+        .id-card img {
+            border-radius: 50%;
+            border: 2px solid #007bff;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .id-card .profile-info {
+            margin-left: 140px;
+        }
+
+            .id-card .profile-info h3 {
+                margin-top: 0;
+            }
+
+            .id-card .profile-info p {
+                margin: 5px 0;
+            }
+
+            .id-card .profile-info .label {
+                font-weight: bold;
+                color: #007bff;
+            }
+
+        .id-card .actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+            .id-card .actions a {
+                margin: 0 10px;
+            }
+</style>
+
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+
+    <div class="id-card">
+        <!-- Profile Picture -->
+        <div class="row">
+            <div class="col-md-4 text-center">
+                @if (!string.IsNullOrEmpty(Model.PhotoPath))
+                {
+                    <img src="@Model.PhotoPath" alt="Profile Picture" />
+                }
+                else
+                {
+                    <div class="bg-light border rounded p-3" style="width: 120px; height: 120px; border-radius: 50%;">
+                        <p class="text-center">No photo available</p>
+                    </div>
+                }
+            </div>
+
+            <!-- Profile Details -->
+            <div class="col-md-8 profile-info">
+                <h3>@Model.Name</h3>
+                <p><span class="label">ID:</span> @Model.Id</p>
+                <p><span class="label">Email:</span> @Model.Email</p>
+                <p><span class="label">Gender:</span> @Model.Gender</p>
+                <p><span class="label">Date of Birth:</span> @Model.DOB?.ToString("dd/MM/yyyy")</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a asp-action="GetAll" class="btn btn-primary">Back to List</a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>

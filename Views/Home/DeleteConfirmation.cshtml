@@ -1,0 +1,26 @@
+﻿@model EmployeeApp.Models.EmployeesData
+
+@{
+    ViewData["Title"] = "Delete Confirmation";
+}
+
+<h2>Are you sure you want to delete this student?</h2>
+
+<div>
+    <h3>@Model.Name</h3>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Gender:</strong> @Model.Gender</p>
+    <p><strong>Date of Birth:</strong> @Model.DOB?.ToString("dd/MM/yyyy")</p>
+
+    @if (!string.IsNullOrEmpty(Model.PhotoPath))
+    {
+        <p><strong>Current Photo:</strong></p>
+        <img src="@Model.PhotoPath" alt="Current photo" width="150" />
+    }
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="GetAll" class="btn btn-secondary">Cancel</a>
+</form>
